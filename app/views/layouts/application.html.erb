@@ -19,6 +19,7 @@
       <% else %>
         <p>
          <%= link_to "Sign Out", destroy_user_session_path, method: :delete, class: 'navbar-link pull-right' %> 
+         <%= link_to "Reset Password", edit_user_password_path, class: 'navbar-link pull-right' %>
         </p>
          <% end %>
     </ul>
