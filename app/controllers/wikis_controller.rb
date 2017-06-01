@@ -1,6 +1,6 @@
 class WikisController < ApplicationController
   before_action :signed_in, except: [:index, :show]
-  before_action :user_auth, only: [:delete]
+  before_action :user_auth, only: [:delete, :edit]
   
   
   def index
@@ -20,6 +20,7 @@ class WikisController < ApplicationController
     @wiki.title = params[:wiki][:title]
     @wiki.body = params[:wiki][:body]
     @wiki.private = params[:wiki][:private]
+    @wiki.user = current_user
     
     if @wiki.save
       flash[:notice] = "Wiki was saved."
@@ -72,11 +73,13 @@ class WikisController < ApplicationController
   end
   
   def user_auth
-    unless wiki.user
+    unless current_user == wiki.user || current_user.admin?
     flash[:alert] = "You must be the owner to do this!"
     redirect_to wikis_path
     end
   end
+  
+
   
   
   
