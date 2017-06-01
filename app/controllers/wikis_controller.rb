@@ -1,6 +1,6 @@
 class WikisController < ApplicationController
   before_action :signed_in, except: [:index, :show]
-  before_action :user_auth, only: [:delete, :edit]
+  before_action :user_auth, only: [:destroy, :edit]
   
   
   def index
@@ -73,6 +73,7 @@ class WikisController < ApplicationController
   end
   
   def user_auth
+    wiki = Wiki.find(params[:id])
     unless current_user == wiki.user || current_user.admin?
     flash[:alert] = "You must be the owner to do this!"
     redirect_to wikis_path
