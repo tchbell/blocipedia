@@ -1,4 +1,8 @@
 class WikisController < ApplicationController
+  before_action :signed_in, except: [:index, :show]
+  before_action :user_auth, only: [:delete]
+  
+  
   def index
     @wikis= Wiki.all
   end
@@ -57,6 +61,24 @@ class WikisController < ApplicationController
        render :show
     end
   end
+  
+  private
+  
+  def signed_in
+    unless current_user
+    flash[:alert] = "You must be logged in to do this!"
+    redirect_to new_user_session_path
+    end
+  end
+  
+  def user_auth
+    unless wiki.user
+    flash[:alert] = "You must be the owner to do this!"
+    redirect_to wikis_path
+    end
+  end
+  
+  
   
   
 end

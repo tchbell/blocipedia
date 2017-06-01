@@ -1,10 +1,10 @@
-#require 'rspec/rails'
+require 'rails_helper'
 
 
 RSpec.configure do |config|
     #this is causing a testing error
-    #consfig.include Devise::Test::ControllerHelpers, type: :controller
-    #config.include Devise::Test::ControllerHelpers, type: :view
+    config.include Devise::Test::ControllerHelpers, type: :controller
+    config.include Devise::Test::ControllerHelpers, type: :view
     
     
   # rspec-expectations config goes here. You can use an alternate
