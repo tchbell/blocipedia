@@ -6,5 +6,7 @@ resources :wikis
   get "welcome/index"  
   
    root 'welcome#index'
+   
+   resources :charges, only: [:new, :create]
 
 end
