@@ -3,7 +3,15 @@
 <div class="media">
     <div class="media-body">
         <h4 class="media-heading">
-            <p><%= link_to wiki.title, wiki %></p>
+            <p>
+                <% if current_user.standard? %> 
+                    <% unless wiki.private? %>
+                        <%= link_to wiki.title, wiki %>
+                    <% end %>
+                <% else %>
+                    <%= link_to wiki.title, wiki %>
+                <% end %>
+            </p>
         </h4>
     </div>
 </div>

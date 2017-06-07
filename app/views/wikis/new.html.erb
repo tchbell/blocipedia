@@ -10,10 +10,10 @@
      <%= f.label :body %>
      <%= f.text_area :body %>
      </div>
-     <% if current_user.premium? %>
+     <% if current_user.premium? || current_user.admin? %>
      <div class="form-group">
-     <%= f.label :private %>
-     <%= f.check_box :private %>
+     <%= f.label :private, class: 'checkbox' %>
+     <%= f.check_box :private %> Private wiki
     </div>
     <% end %>
     <div class="form-group">

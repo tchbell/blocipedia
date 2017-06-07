@@ -13,7 +13,6 @@ class User < ActiveRecord::Base
   
   
   
-  
   enum role: [:standard, :premium, :admin]
 
 end

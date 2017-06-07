@@ -41,6 +41,7 @@ class WikisController < ApplicationController
     @wiki = Wiki.find(params[:id])
     @wiki.title = params[:wiki][:title]
     @wiki.body = params[:wiki][:body]
+    @wiki.private = params[:wiki][:private]
     
     if @wiki.save
       flash[:notice] = "Wiki was updated."
@@ -74,7 +75,7 @@ class WikisController < ApplicationController
   
   def user_auth
     wiki = Wiki.find(params[:id])
-    unless current_user == wiki.user || current_user.admin?
+    unless current_user == wiki.user || current_user.admin? || current_user.premium?
     flash[:alert] = "You must be the owner to do this!"
     redirect_to wikis_path
     end
