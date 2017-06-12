@@ -1,13 +1,23 @@
 class CollaboratorsController < ApplicationController
+    
+    
+def index 
+   @collaborators =  Collaborator.all 
+end
 
 def create 
-    user = User.find(params[:user_id])
-    collaborator = user
+    wiki = Wiki.find(params[:id])
+    user = User.find(params[:id])
     
-    if collaborator.save
-        flash[:notice] = "#{collaborator.email} was added as a collaborator"
+    
+    @collaborator = wiki.users << user
+    
+    if @collaborator.save
+        flash[:notice] = "Collaborator added"
+        redirect_to wiki
     else
         flash[:alert] = "Failed"
+        redirect_to wiki
     end
 end
 

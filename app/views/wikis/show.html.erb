@@ -4,5 +4,17 @@
 <% if current_user.premium? || current_user.admin? || current_user.id == @wiki.user_id %>
 <%= link_to "Edit", edit_wiki_path(@wiki), class: 'btn btn-success' %>
 <% end %>
-<%= link_to "Delete Post", @post, method: :delete, class: 'btn btn-danger', data: {confirm: 'Are you sure you want to delete this post?'} %>
+<%= link_to "Delete Post", @post, method: :delete, class: 'btn btn-danger', data: {confirm: 'Are you sure you want to delete this wiki?'} %>
+
+<h3>Collaborators</h3>
+<% @wiki.collaborators.each do |collaborator| %>
+<ul>
+    <li><%= User.find(collaborator.id).email %></li>
+</ul>
+
+
+
+
+
+<% end %>
   

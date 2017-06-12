@@ -8,7 +8,9 @@ class WikisController < ApplicationController
   end
 
   def show
+    @collaborators = Collaborator.all
     @wiki = Wiki.find(params[:id])
+    @users = User.all
   end
 
   def new
@@ -42,6 +44,7 @@ class WikisController < ApplicationController
     @wiki.title = params[:wiki][:title]
     @wiki.body = params[:wiki][:body]
     @wiki.private = params[:wiki][:private]
+    @wiki.users << params[:wiki][:user_id]
     
     if @wiki.save
       flash[:notice] = "Wiki was updated."
@@ -50,6 +53,7 @@ class WikisController < ApplicationController
       flash[:alert] = "There was an error in updating the Wiki. Please try again."
       render :edit
     end
+    
   end
   
   def destroy
@@ -81,6 +85,9 @@ class WikisController < ApplicationController
     end
   end
   
+  def add_collab
+    wiki.users << user
+  end
 
   
   
