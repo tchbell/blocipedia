@@ -1,11 +1,11 @@
 class WikisController < ApplicationController
   before_action :signed_in, except: [:index, :show]
-  before_action :user_auth, only: [:destroy, :edit]
+  before_action :user_auth, only: [:destroy]
   
   
-  def index
-    @wikis= Wiki.all
-  end
+   def index
+     @wikis = policy_scope(Wiki)
+   end
 
   def show
     @collaborators = Collaborator.all
@@ -44,7 +44,16 @@ class WikisController < ApplicationController
     @wiki.title = params[:wiki][:title]
     @wiki.body = params[:wiki][:body]
     @wiki.private = params[:wiki][:private]
-    @wiki.users << params[:wiki][:user_id]
+    
+    #add collaborator
+    @collaborator = User.find(params[:wiki][:user_id])
+    unless @wiki.users.include?(@collaborator)
+      @wiki.users << @collaborator
+    end
+    
+    #remove collaborator
+    @wiki.users.delete(User.find(params[:wiki][:user]))
+    
     
     if @wiki.save
       flash[:notice] = "Wiki was updated."
@@ -55,6 +64,19 @@ class WikisController < ApplicationController
     end
     
   end
+  
+  # Use outside of create method
+  def add_collab
+     @collaborator = User.find(params[:wiki][:user_id])
+    unless @wiki.users.include?(@collaborator)
+      @wiki.users << @collaborator
+    end
+  end
+  
+  def remove_collab
+    @wiki.users.delete(User.find(params[:wiki][:user]))
+  end
+  
   
   def destroy
     @wiki = Wiki.find(params[:id])
@@ -85,9 +107,7 @@ class WikisController < ApplicationController
     end
   end
   
-  def add_collab
-    wiki.users << user
-  end
+  
 
   
   

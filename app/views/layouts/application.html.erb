@@ -18,7 +18,7 @@
    <%= link_to "Sign Up", new_user_registration_path, :class => 'navbar-link'  %> -
    <%= link_to "Sign In", new_user_session_path, :class => 'navbar-link'  %>
  <% end %>
- <% if current_user.premium? %>
+ <% if user_signed_in? && current_user.premium? %>
    <%= link_to "Downgrade", role_toggle_path(current_user.id), :data => {:confirm => 'Are you sure, all private wikis will become public?'} %>
  <% end %>
  </div>

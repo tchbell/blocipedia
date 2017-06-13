@@ -20,12 +20,19 @@
        <div class="form-group">
          <%= f.submit "Save", class: 'btn btn-success' %>
        </div>
-      <div>
-          <h3>Add collaborator</h3>
+        <div>
+         <h3>Add collaborator</h3>
       <%= f.collection_select :user_id, User.all, :id, :email,  include_blank: true %>
-      <%= f.submit "Submit", class: 'btn btn-success' %>
+      <%= f.submit "Submit", class: 'btn btn-success'%>
       </div>
+       <div>
+         <h3>Remove collaborator</h3>
+      <%= f.collection_select :user, @wiki.users, :id, :email,  include_blank: true %>
+      <%= f.submit "Remove", class: 'btn btn-danger'%>
+      </div>
+      
      <% end %>
+   
      
      
       
