@@ -46,13 +46,17 @@ class WikisController < ApplicationController
     @wiki.private = params[:wiki][:private]
     
     #add collaborator
-    @collaborator = User.find(params[:wiki][:user_id])
-    unless @wiki.users.include?(@collaborator)
-      @wiki.users << @collaborator
+    unless params[:wiki][:user_id] == ""
+      @collaborator = User.find(params[:wiki][:user_id])
+      unless @wiki.users.include?(@collaborator)
+        @wiki.users << @collaborator
+      end
     end
     
     #remove collaborator
-    @wiki.users.delete(User.find(params[:wiki][:user]))
+    unless params[:wiki][:user] == ""
+      @wiki.users.delete(User.find(params[:wiki][:user]))
+    end
     
     
     if @wiki.save
@@ -66,16 +70,16 @@ class WikisController < ApplicationController
   end
   
   # Use outside of create method
-  def add_collab
-     @collaborator = User.find(params[:wiki][:user_id])
-    unless @wiki.users.include?(@collaborator)
-      @wiki.users << @collaborator
-    end
-  end
+  # def add_collab
+  #   @collaborator = User.find(params[:wiki][:user_id])
+  #   unless @wiki.users.include?(@collaborator)
+  #     @wiki.users << @collaborator
+  #   end
+  # end
   
-  def remove_collab
-    @wiki.users.delete(User.find(params[:wiki][:user]))
-  end
+  # def remove_collab
+  #   @wiki.users.delete(User.find(params[:wiki][:user]))
+  # end
   
   
   def destroy

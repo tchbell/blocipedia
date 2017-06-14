@@ -11,6 +11,9 @@ resources :wikis
    
    get "/users/:id/role_toggle", to: "users#role_toggle", as: :role_toggle
   
+#   post "/wikis/:id/add_collab", to: "wikis#add_collab", as: :add_collab
+  
+  
 resources :users
 
 end
